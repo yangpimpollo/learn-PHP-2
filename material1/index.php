@@ -1,32 +1,30 @@
 <?php 
 
-class Person {
-    protected $firstName;
-    protected $lastName;
+abstract class Unit {
+    protected $falive = true;
+    protected $name;
 
-    public function __construct($firstName, $lastName) {
-        $this->firstName = $firstName;
-        $this->lastName = $lastName;
-    }
+    public function __construct($name) { $this->name = $name; }
+    
 
-    public function getFullName() { return "$this->firstName $this->lastName"; }
+    abstract public function move($direction);
 
-    public function getFirstName() { return $this->firstName; }
-    public function setFirstName($firstName) { $this->firstName = $firstName; }
-    public function getLastName() { return $this->lastName; }
-
-    public function setLastName($lastName) { 
-        if($lastName === 'Smith')  { throw new Exception("Smith no está permitido como apellido.."); }
-        $this->lastName = $lastName; 
-    }
+    public function atack($opponent) { echo $this->name . " is attacking " . $opponent . "\n"; }
+    
 }
 
-$person1 = new Person('John', 'Doe');
+class Soldier extends Unit {
+    
+    public function move($direction) {
+            echo $this->name . " is moving " . $direction . "\n";
+    }
+    public function atack($opponent) {
+        echo $this->name . " is attacking " . $opponent . " with a sword\n";
+    }
 
-#$firstName = $person1->firstName;
-#$lastName = $person1->lastName;
 
-#echo "Hello, ". $person1->getFullName() . "!";
-$person1->setLastName('Smith');
-#echo "Hello, ". $person1->getFullName() . "!";
+}
+
+$fulano = new Soldier( "Fulano");
+$fulano->atack("enemies");  
 ?>
