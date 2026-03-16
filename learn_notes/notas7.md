@@ -96,7 +96,77 @@ class Pato extends Animal implements Volador, Nadador {
 }
 ```
 
- ## video 06 (interfaces y polimorfismo)
+ ## video 06 (Autocarga de clases y espacio de nombres)
 
+para importar clases `require 'classA.php'` tambien `spl_autoload_register` lo hace automaticamente carga las clases necesarias y espacio de nombres `namespace`
+
+
+ ## video 07 (Autocarga de clases con composer)
+
+ En la consola `composer init` rellerar el formulario y se creara composer.json, y la carpeta vendor
+
+ ## video 08 (repaso de ejercicios)
+
+ ## video 09 (patron factory)
  ```php
+
+ proyect/
+    |──public/ ── [index.php]
+    |──src/ ── [Operacion.php, OperacionFactory.php, Suma.php, Resta.php]
+    |──vendor/ ── [composer/, autoload.php]
+    |──composer.json
+    |──.gitignore
+
+  ### composer.json
+    {
+    "name": "mat1/oot",
+    "autoload": {
+        "psr-4": {
+            "Mat1\\Oot\\": "src/"
+        }
+    },
+
+  ### interface Operacion.php
+    <?php
+        namespace Mat1\Oot;
+
+        interface Operacion { public function calcular(): string; }
+    ?>
+  ### clases sumas y resta
+    <?php
+        namespace Mat1\Oot;
+
+        class Suma implements Operacion {
+            public function calcular(): string {
+                return "Calculando una suma... 3 + 5 = 8";
+            }
+        }
+        class Resta implements Operacion {
+            public function calcular(): string {
+                return "Calculando una resta...";
+            }
+        }
+
+  ### OperacionFactory.php
+    <?php
+        namespace Mat1\Oot;
+
+        class OperacionFactory {
+            public static function crear(string $tipo): Operacion {
+                return match ($tipo) {
+                    'suma' => new Suma(),
+                    'resta' => new Resta(),
+                    default => throw new \Exception("Tipo de operación no soportado"),
+                };
+            }
+        }
+  ### index.php
+        require_once __DIR__ . '/../vendor/autoload.php';
+
+        use Mat1\Oot\OperacionFactory;                   // como no esta en el espacio de nombres se debe importar
+
+        $operacion = OperacionFactory::crear('suma');
+        echo $operacion->calcular(); // Imprime: Calculando una suma... 
+
+
  ```

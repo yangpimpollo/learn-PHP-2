@@ -1,0 +1,16 @@
+{
+    "name": "material1/oop",
+    "description": "...",
+    "autoload": {
+        "psr-4": {
+            "Material1\\Oop\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "yangpimpollo",
+            "email": "clin@odiseo.pe"
+        }
+    ],
+    "require": {}
+}
