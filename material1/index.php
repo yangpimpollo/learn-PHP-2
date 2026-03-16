@@ -26,5 +26,7 @@ class Soldier extends Unit {
 }
 
 $fulano = new Soldier( "Fulano");
-$fulano->atack("enemies");  
+$fulano->atack("enemies"); 
+
+echo "helllllooooooooooooooooooooooo"
 ?>

@@ -75,5 +75,28 @@ $fulano->attack("enemies");
 ```
 
  ## video 05 (interfaces y polimorfismo)
+En PHP una clase solo:                                                                           
+    ✅ Puede heredar de una sola clase                            
+    ✅ Puede implementar varias interfaces                                                 
+    ✅ Cuando una clase implementa una interface, debe definir todos sus métodos                                 
+    ✅ Cuando una clase hereda de otra (extends), no es obligatorio sobrescribir los métodos.                       
+
 ```php
+class Animal { public function comer() { echo "Comiendo"; } }
+
+interface Volador { public function volar(); }
+interface Nadador { public function nadar(); }
+
+class Pato extends Animal implements Volador, Nadador {
+
+    public function volar() {  echo "Volando"; }
+    public function nadar() { echo "Nadando"; }
+
+    public function comer() { echo "El pato está comiendo"; }    // opcional sobreescribir la función heredada
+}
 ```
+
+ ## video 06 (interfaces y polimorfismo)
+
+ ```php
+ ```
