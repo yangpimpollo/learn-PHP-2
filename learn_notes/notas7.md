@@ -170,3 +170,47 @@ para importar clases `require 'classA.php'` tambien `spl_autoload_register` lo h
 
 
  ```
+
+ ## video 13 (patron facade)
+
+ ## video 14 (declarar constantes)
+
+ ## video 15 (metodos magicos get set isset unser)
+
+ ## video 16 (llamada dinamica a metodo)
+
+ ## video 17 (metodos magicos call callStatic)
+
+ ## video 18 (metodos magicos toString invoke)
+
+ ## video 19 (metodos magicos sleep wakeup)
+
+ ## video 20 (metodos magicos clone)
+
+
+ ## video 21 (iteracion de objetos)
+ ## video 22 (objetos inmutables)
+ ## video 23 (compracion objetos)
+ ## video 24 (traits)
+
+ ## video 25 (creacion macros usando traits metodos estaticos y call)
+ ## video 26 (instalar componentes con composer)
+ ## video 27 (desrrollo de clases y metodos con pruebas automatizadas)
+ ## video 28 (array access1)
+ ## video 29 (array access2)
+ ## video 30 (clases anonimos)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
