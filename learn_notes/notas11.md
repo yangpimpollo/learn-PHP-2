@@ -27,4 +27,10 @@
 
 https://freeasphosting.net/
 
+user: fulano
+pass: root
+mail: sorabov472@soco7.com
+url: https://fulano.bsite.net
+Server Name: sql.bsite.net\MSSQL2016SQL 
+Username: fulano_fulano
 
