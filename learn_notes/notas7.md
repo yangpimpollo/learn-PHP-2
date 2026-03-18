@@ -172,10 +172,72 @@ para importar clases `require 'classA.php'` tambien `spl_autoload_register` lo h
  ```
 
  ## video 13 (patron facade)
+ El patrón Facade (Fachada) es uno de los diseños más útiles cuando quieres esconder la complejidad de un sistema detrás de una interfaz simple. En lugar de que tu código principal tenga que lidiar con cinco clases diferentes, solo interactúa con una.
+```php
+❌ // Código complejo y repetitivo
+   $stock = new Inventory();
+   $payment = new PaymentGateway();
+   $shipping = new CourierService();
+   
+   if ($stock->check('Laptop')) {
+       $payment->charge(1200);
+       $shipping->ship('Calle Falsa 123');
+   }
+
+✅
+class Inventory { public function checkProduct($name) { return true; } }
+class PaymentGateway { public function processPayment($amount) { echo "Cobrando $$amount...\n"; } }
+class Shipping { public function sendProduct($address) { echo "Enviando a $address...\n"; } }
+
+class OrderFacade {
+    protected $inventory;
+    protected $payment;
+    protected $shipping;
+
+    public function __construct() {
+        $this->inventory = new Inventory();
+        $this->payment = new PaymentGateway();
+        $this->shipping = new Shipping();
+    }
+
+    public function placeOrder($product, $price, $address) {
+        if ($this->inventory->checkProduct($product)) {
+            $this->payment->processPayment($price);
+            $this->shipping->sendProduct($address);
+            return "¡Pedido completado con éxito!";
+        }
+        return "Error: Producto no disponible.";
+    }
+}
+
+// Uso súper simple
+$order = new OrderFacade();
+echo $order->placeOrder("Laptop", 1200, "Av. Siempre Viva 742");
+```
 
  ## video 14 (declarar constantes)
+ tienes dos formas principales de declarar constantes
+```php
+define("PI", 3.1416);                     // define
+define("APP_NAME", "Mi Sistema");         // alcance global, dentro de if, ma lenta 
+echo PI; // Imprime 3.1416
+
+
+const MONEDA = "USD";                                            // const
+class Config { const VERSION = "1.0.2"; }                    // alcance local dentro de una clase, no puede con if, mas rapido
+echo Config::VERSION;                                       // Acceso mediante el operador de resolución de ámbito
+
+if (!defined("API_KEY")) { define("API_KEY", "12345"); }        // ver si se definio
+```
 
  ## video 15 (metodos magicos get set isset unser)
+ 🧠 FORMA DE RECORDARLO
+Piensa que tu objeto tiene un “portero”:
+- Si alguien quiere ver algo → __get
+- Si quiere cambiar algo → __set
+- Si pregunta “¿existe?” → __isset
+- Si quiere borrar → __unset
+Se activan solo cuando: la propiedad no existe, o es private/protected
 
  ## video 16 (llamada dinamica a metodo)
 
@@ -212,5 +274,219 @@ para importar clases `require 'classA.php'` tambien `spl_autoload_register` lo h
 
 
 
+Te hago un resumen claro y ordenado de todos esos temas, sin complicarte 👇
 
+🔥 BLOQUE 1: DINÁMICA Y MÉTODOS MÁGICOS
+▶️ Video 16 – Llamada dinámica a método
+
+Llamas métodos usando variables:
+
+$metodo = "hola";
+$obj->$metodo();
+
+👉 Sirve para hacer código flexible (APIs, routers)
+
+▶️ Video 17 – __call() y __callStatic()
+
+Se ejecutan cuando llamas métodos que no existen
+
+__call($nombre, $args)
+__callStatic($nombre, $args)
+
+👉 Uso típico:
+
+Simular métodos
+
+Crear APIs dinámicas
+
+▶️ Video 18 – __toString() y __invoke()
+__toString()
+
+👉 Convierte objeto a string
+
+echo $obj;
+__invoke()
+
+👉 Permite usar el objeto como función
+
+$obj();
+▶️ Video 19 – __sleep() y __wakeup()
+
+👉 Se usan con serialización
+
+__sleep() → antes de guardar objeto
+
+__wakeup() → al restaurarlo
+
+👉 Ejemplo: guardar en sesión
+
+▶️ Video 20 – __clone()
+
+👉 Se ejecuta cuando clonas un objeto
+
+$obj2 = clone $obj1;
+
+👉 Sirve para:
+
+Copias controladas
+
+Evitar compartir referencias
+
+🔥 BLOQUE 2: OBJETOS Y ESTRUCTURAS
+▶️ Video 21 – Iteración de objetos
+
+Puedes recorrer objetos con foreach
+
+foreach ($obj as $key => $value) {}
+
+👉 Solo propiedades públicas (por defecto)
+
+▶️ Video 22 – Objetos inmutables
+
+👉 No se pueden modificar después de crearse
+
+class User {
+    private $name;
+    public function __construct($name) {
+        $this->name = $name;
+    }
+}
+
+👉 Ventaja:
+
+Más seguro
+
+Menos errores
+
+▶️ Video 23 – Comparación de objetos
+$obj1 == $obj2  // valores iguales
+$obj1 === $obj2 // misma instancia
+
+👉 IMPORTANTE:
+
+== compara contenido
+
+=== compara referencia
+
+▶️ Video 24 – Traits
+
+👉 Reutilizar código sin herencia
+
+trait Saludo {
+    public function hola() {
+        echo "Hola";
+    }
+}
+class Persona {
+    use Saludo;
+}
+
+👉 Es como “copiar y pegar elegante”
+
+🔥 BLOQUE 3: NIVEL MÁS AVANZADO
+▶️ Video 25 – Macros (traits + static + __call())
+
+👉 Crear métodos dinámicos en tiempo de ejecución
+
+Ejemplo idea:
+
+Clase::macro('saludar', function() {
+    return "Hola";
+});
+
+👉 Muy usado en frameworks como Laravel
+
+▶️ Video 26 – Composer
+
+👉 Gestor de dependencias de PHP
+
+composer require paquete
+
+👉 Sirve para:
+
+Instalar librerías
+
+Autoload automático
+
+▶️ Video 27 – Pruebas automáticas
+
+👉 Testear código automáticamente
+
+Herramientas:
+
+PHPUnit
+
+👉 Beneficio:
+
+Detectar errores rápido
+
+Código más confiable
+
+🔥 BLOQUE 4: OBJETOS COMO ARRAYS Y MÁS
+▶️ Video 28–29 – ArrayAccess
+
+👉 Permite usar objetos como arrays
+
+$obj["clave"] = "valor";
+
+Implementando:
+
+offsetSet()
+offsetGet()
+offsetExists()
+offsetUnset()
+▶️ Video 30 – Clases anónimas
+
+👉 Clases sin nombre
+
+$obj = new class {
+    public function hola() {
+        echo "Hola";
+    }
+};
+
+👉 Útil para:
+
+Código rápido
+
+Testing
+
+Objetos temporales
+
+🎯 RESUMEN FINAL (IDEA GLOBAL)
+🔹 Dinamismo
+
+Llamadas dinámicas
+
+__call, __invoke
+
+🔹 Control de objetos
+
+__clone, __sleep, __wakeup
+
+Comparación e inmutabilidad
+
+🔹 Reutilización
+
+Traits
+
+Macros
+
+🔹 Profesionalización
+
+Composer
+
+Testing
+
+🔹 Flexibilidad avanzada
+
+ArrayAccess
+
+Clases anónimas
+
+🧠 IDEA CLAVE
+
+Todo esto apunta a una cosa:
+
+👉 Hacer PHP más flexible, reutilizable y parecido a frameworks modernos
  
